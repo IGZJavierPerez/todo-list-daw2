@@ -31,10 +31,13 @@
 	};
 
 	function addTodo(text) {
+	  if (text!='')
+	  {
 		var todoUI = new TODO_APP.TodoUI(text, parent);
 		todosUI.push(todoUI);
 		document.getElementById('todo-list').appendChild(todoUI.container);
 		render(false);
+	  }
 	}
 
 	function delTodoUI(todoUI) {
