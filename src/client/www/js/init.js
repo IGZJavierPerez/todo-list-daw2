@@ -31,7 +31,7 @@
 	};
 
 	function addTodo(text) {
-	  if (text!='')
+	  if(!(text.length == 0 || /^\s+$/.test(text)))
 	  {
 		var todoUI = new TODO_APP.TodoUI(text, parent);
 		todosUI.push(todoUI);
