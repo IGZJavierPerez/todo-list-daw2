@@ -31,10 +31,20 @@
 	};
 
 	function addTodo(text) {
-		var todoUI = new TODO_APP.TodoUI(text, parent);
-		todosUI.push(todoUI);
-		document.getElementById('todo-list').appendChild(todoUI.container);
-		render(false);
+	  if(!(text.length == 0))
+	  {
+            if(/^\s+$/.test(text))
+	    {
+	        if (key==13){}
+	    }
+		else
+	    {
+		    var todoUI = new TODO_APP.TodoUI(text, parent);
+		    todosUI.push(todoUI);
+		    document.getElementById('todo-list').appendChild(todoUI.container);
+		    render(false);
+	    }
+	  }
 	}
 
 	function delTodoUI(todoUI) {
