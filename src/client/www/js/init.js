@@ -2,7 +2,9 @@
 
     var parent = {
         render: render,
-        delTodoUI: delTodoUI
+        delTodoUI: delTodoUI,
+        sortTodos: sortTodos,
+        applyFilter: applyFilter
     };
 
     var todosUI = [];
@@ -42,6 +44,17 @@
             return true;
 
         }
+    }
+    
+    function sortTodos (){
+        todosUI.sort(compareTodos);
+        document.getElementById('todo-list').innerHTML="";
+        for (var i=0;i<todosUI.length;i++){
+            var todoUI = todosUI[i];
+            document.getElementById('todo-list').appendChild(todoUI.container);
+        }
+         render(true);
+   
     }
 
     function delTodoUI(todoUI) {
@@ -100,7 +113,6 @@
         var mainSection = document.getElementById('main');
         var footer = document.getElementById('footer');
 
-
         if (TODO_APP.countTodos() > 0) {
             footer.style.display = '';
             mainSection.style.display = '';
@@ -135,6 +147,21 @@
         activeLink.className = 'selected';
 
     }
+    function compareTodos(todo1,todo2){
+            if (!todo1.getTodo().getChecked() && todo2.getTodo().getChecked()){
+                return -1;
+            }else if (todo1.getTodo().getChecked() && !todo2.getTodo().getChecked()){
+                return 1;
+            }else if (!todo1.getTodo().getChecked()&&!todo2.getTodo().getChecked()){
+                var a=todo1.getTodo().creationDate.getTime();
+                var b=todo2.getTodo().creationDate.getTime();
+                return a-b;
+            }else{    
+                var a=todo1.getTodo().doneDate.getTime();
+                var b=todo2.getTodo().doneDate.getTime();
+                return a-b;
+            }
+        }
 })();
 
 

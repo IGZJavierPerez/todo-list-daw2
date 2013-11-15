@@ -34,13 +34,19 @@
 				if (myState !== true && myState !== false) {
 					throw "Bad state (only true or false are valid values)";
 				} else {
-					checked = myState;
-				}
+                                            checked = myState;
+                                        if (!myState){
+                                            delete this.doneDate;
+                                        }else{
+                                            this.doneDate=new Date();
+                                        }
+                                }
 			},
 			isVisible: isVisible,
 			isDeleted: function() {
 				return false;
-			}
+			},
+                        creationDate: new Date()
 		};
 		todos[id] = todo;
 		numTodos++;
@@ -137,6 +143,23 @@
 	function filterTodos(newFilter) {
 		filter = newFilter;
 	}
+        function compareTodos(todo1,todo2){
+            if (!todo1.todo.getChecked() && todo2.todo.getChecked()){
+                return -1;
+            }else if (todo1.todo.getChecked() && !todo2.todo.getChecked()){
+                return 1;
+            }else if (!todo1.todo.getChecked()&&!todo2.todo.getChecked()){
+                return todo1.todo.doneDate.getTime()<todo2.todo.creationDate.getTime()?1:-1;
+            }else{    
+                return todo1.todo.creationDate.getTime()<todo2.todo.doneDate.getTime()?1:-1;
+            }
+        }
+        function showTodos (){
+            var keys = Object.keys(todos);
+            for (var i = 0; i < keys.length; i++) {
+                 console.log(todos[keys[i]].getText()); 
+            }
+        }
 
 
 	root.TODO_APP = {
@@ -151,7 +174,8 @@
 		itemsLeft: itemsLeft,
 		filterTodos: filterTodos,
 		toString: toString,
-		reset: reset
+		reset: reset,
+                showTodos: showTodos
 	};
 
 }).call(this);

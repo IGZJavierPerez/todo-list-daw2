@@ -14,7 +14,12 @@
 		check.onclick = function() {
 			todo.setChecked(!todo.getChecked());
 			that.render();
-			that.parent.render();
+                        if (!todo.getChecked()){
+                          that.parent.sortTodos();  
+                        }else{
+                            document.getElementById('todo-list').appendChild(that.container);
+                            parent.applyFilter();
+                        }
 		};
 		div.appendChild(check);
 
@@ -97,6 +102,9 @@
 			this.checker.checked = false;
 		}
 	};
+        TodoUI.prototype.getTodo = function getTodo (){
+            return this.todo;
+        };
 
 	TODO_APP.TodoUI = TodoUI;
 
