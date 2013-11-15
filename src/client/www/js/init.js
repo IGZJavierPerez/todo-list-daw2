@@ -39,8 +39,7 @@
         {
             var todoUI = new TODO_APP.TodoUI(task, parent);
             todosUI.push(todoUI);
-            document.getElementById('todo-list').appendChild(todoUI.container);
-            render(false);
+            sortTodos();
             return true;
 
         }
@@ -155,7 +154,7 @@
             }else if (!todo1.getTodo().getChecked()&&!todo2.getTodo().getChecked()){
                 var a=todo1.getTodo().creationDate.getTime();
                 var b=todo2.getTodo().creationDate.getTime();
-                return a-b;
+                return b-a;
             }else{    
                 var a=todo1.getTodo().doneDate.getTime();
                 var b=todo2.getTodo().doneDate.getTime();
