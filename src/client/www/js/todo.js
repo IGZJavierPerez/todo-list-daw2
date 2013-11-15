@@ -156,8 +156,7 @@
 		itemsLeft: itemsLeft,
 		filterTodos: filterTodos,
 		toString: toString,
-		reset: reset,
-                showTodos: showTodos
+		reset: reset
 	};
 
 }).call(this);
