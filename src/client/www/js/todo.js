@@ -5,7 +5,7 @@
 	var numTodos = 0;
 	var id = 0;
 	var filter = "all";
-
+        
 	function reset() {
 		todos = {};
 		numTodos = 0;
@@ -15,7 +15,11 @@
 
 	function addTodo(text) {
 		var checked = false;
+		var fechaI=new Date();
+		console.log(fechaI.getSeconds());
+		var fechaF;
 		var todo = {
+		
 			getId: (function(myId) {
 				return function() {
 					return myId;
@@ -30,12 +34,28 @@
 			getChecked: function() {
 				return checked;
 			},
+			
 			setChecked: function(myState) {
 				if (myState !== true && myState !== false) {
 					throw "Bad state (only true or false are valid values)";
 				} else {
+				    if(myState === true)
+					{
+					   fechaF= new Date();
+					   console.log(fechaF.getSeconds());
+					}
+					else
+					{
+						fechaF = undefined;
+					}
 					checked = myState;
 				}
+			},
+			getFechaI: function() {
+				return fechaI;
+			},
+			getFechaF: function() {
+				return fechaF;
 			},
 			isVisible: isVisible,
 			isDeleted: function() {
@@ -45,7 +65,6 @@
 		todos[id] = todo;
 		numTodos++;
 		id++;
-
 		return todo;
 
 	}
@@ -137,6 +156,18 @@
 	function filterTodos(newFilter) {
 		filter = newFilter;
 	}
+        
+        function compareTo(todo1, todo2) {
+            if (todo1.checkedDate && todo2.checkedDate) {
+                return todo1.checkedDate().getTime() - todo2.checkedDate().getTime();
+            } else if (todo1.checkedDate) {
+                return todo1.checkedDate().getTime();
+            } else if (todo2.checkedDate) {
+                return -todo2.checkedDate().getTime();
+            } else {
+                return todo2.getCreationDate().getTime() - todo1.getCreationDate().getTime();
+            }
+        }
 
 
 	root.TODO_APP = {
@@ -151,7 +182,8 @@
 		itemsLeft: itemsLeft,
 		filterTodos: filterTodos,
 		toString: toString,
-		reset: reset
+		reset: reset,
+                compareTo: compareTo
 	};
 
 }).call(this);

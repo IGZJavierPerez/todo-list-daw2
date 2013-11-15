@@ -14,6 +14,7 @@
 		check.onclick = function() {
 			todo.setChecked(!todo.getChecked());
 			that.render();
+			parent.ordenar();
 			that.parent.render();
 		};
 		div.appendChild(check);
@@ -22,33 +23,32 @@
 		var text = document.createElement("input");
 		text.type = 'text';
 		text.value = todo.getText();
-		text.mode = 'view';
 		text.className = "edit";
 
 		text.onkeyup = function(event) {
 			if (event.keyCode === 13) {
-				modTodo(todo, text, label);
-				that.render();
-				that.parent.render();
+				this.blur();
 			} else if (event.keyCode === 27) {
-				cancelEdition(text, label);
-				that.render();
-				that.parent.render();
+				li.className = 'view';
+                this.blur();
 			}
 		};
 
 		text.addEventListener('blur', function() {
-			if (text.mode === 'edit') {
-				text.mode = 'view';
+			if (li.className === 'editing') {
 				modTodo(todo, text, label);
 			}
-			li.className = 'view';
+			if (todo.getChecked()){
+				li.className = 'completed';
+
+			}else{
+				li.className = 'view';
+			}
 		});
 
 		var label = document.createElement("label");
 		label.innerHTML = todo.getText();
 		label.ondblclick = function(event) {
-			text.mode = 'edit';
 			text.value = todo.getText();
 			li.className = 'editing';
 			text.focus();
@@ -101,11 +101,6 @@
 		var text = editor.value;
 		TODO_APP.modTodo(todo.getId(), text);
 		viewer.innerHTML = text;
-		editor.mode = 'view';
-	}
-
-	function cancelEdition(editor, viewer) {
-		editor.mode = 'view';
 	}
 
 })();
