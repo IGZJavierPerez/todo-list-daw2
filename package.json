@@ -13,7 +13,7 @@
 		"url": "https://github.com/IGZJavierPerez/todo-list-daw2/issues"
 	},
 	"dependencies": {
-		"express": "~3.4.0",
+		"express": "~4.17.1",
 		"mongodb": "~1.3.19",
 		"winston": "0.7.2",
 		"underscore": "~1.5.2",
